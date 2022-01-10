@@ -1,5 +1,7 @@
 import Data.List
 import System.Environment
+import System.Random
+import Control.Monad (replicateM)
 
 type Steps = [String]
 
@@ -66,7 +68,14 @@ main :: IO()
 main = do
     args <- getArgs
 
-    let intArgs = map read args :: [Int]
+    -- Random values to use in case nothing is provided by the user
+    randomNums <- replicateM 6 (randomRIO (1, 100) :: IO Int)
+    randomTarget <- randomRIO (100, 999) :: IO Int
+
+    -- If user provides 3 or less args, then use randomly generated values
+    -- instead. 3 or less args means 2 numbers and 1 target which is pretty
+    -- pointless.
+    let intArgs = if length args <= 3 then randomNums ++ [randomTarget] else map read args :: [Int]
 
     let nums = init intArgs
     let target = last intArgs
