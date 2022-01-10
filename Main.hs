@@ -13,8 +13,8 @@ type StepNums = [StepNum]
 allPairs :: StepNum -> StepNums
 allPairs (list, steps) = [([x,y], steps) | (x:ys) <- tails $ reverse $ sort list, y <- ys]
 
-operate :: Char -> StepNum -> StepNums
-operate op list = foldl' folder [] $ allPairs list
+operate :: StepNum -> Char -> StepNums
+operate list op = foldl' folder [] $ allPairs list
     where
         folder :: StepNums -> StepNum -> StepNums
         folder acc pair@((x, _):(y, _):[], steps)
@@ -30,7 +30,7 @@ operate op list = foldl' folder [] $ allPairs list
                 listDiff = (fst list) \\ (fst pair)
 
 doStep :: StepNum -> StepNums
-doStep stepNum = (operate '+' stepNum) ++ (operate '-' stepNum) ++ (operate '*' stepNum) ++ (operate '/' stepNum)
+doStep stepNum = concatMap (operate stepNum) "+-*/"
 
 setListUncalculated :: [Int] -> Nums
 setListUncalculated = map (flip (,) False)
