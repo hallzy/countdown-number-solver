@@ -10,6 +10,10 @@ Just run `make`. You will need `ghc` installed (Haskell compiler).
 $ ./countdown <list of numbers> <target>
 ```
 
+If You provide 3 or less arguments, the program will just use randomly generated
+numbers and a random target. 3 arguments would just mean 2 numbers and 1 target
+which is a pretty pointless scenario.
+
 Example:
 
 ```
