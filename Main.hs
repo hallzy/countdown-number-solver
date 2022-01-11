@@ -15,21 +15,32 @@ type StepNums = [StepNum]
 allPairs :: StepNum -> StepNums
 allPairs (list, steps) = [([x,y], steps) | (x:ys) <- tails $ reverse $ sort list, y <- ys]
 
+getOp :: Char -> (Int -> Int -> Int)
+getOp '+' = (+)
+getOp '-' = (-)
+getOp '*' = (*)
+getOp '/' = div
+
 operate :: StepNum -> Char -> StepNums
 operate list op = foldl' folder [] $ allPairs list
     where
         folder :: StepNums -> StepNum -> StepNums
         folder acc pair@((x, _):(y, _):[], steps)
-            | op == '+'            = ((x + y, True)     : listDiff, (newStep ++ (show (x + y)))     : steps) : acc
-            | op == '-'            = ((x - y, True)     : listDiff, (newStep ++ (show (x - y)))     : steps) : acc
-            | op == '*'            = ((x * y, True)     : listDiff, (newStep ++ (show (x * y)))     : steps) : acc
-            | op == '/' && divides = ((x `div` y, True) : listDiff, (newStep ++ (show (x `div` y))) : steps) : acc
-            | otherwise            = acc
+            | op `elem` "+-*"         = common
+            | op == '/' && divides    = common
+            | otherwise                = acc
             where
                 divides = y /= 0 && x `mod` y == 0
+
+                canRadical = (ans ^ y) == x
+
                 newStep = (show x) ++ " " ++ [op] ++ " " ++ (show y) ++ " = "
 
                 listDiff = (fst list) \\ (fst pair)
+
+                ans = (getOp op) x y
+
+                common = ((ans, True) : listDiff, (newStep ++ (show ans)) : steps) : acc
 
 doStep :: StepNum -> StepNums
 doStep stepNum = concatMap (operate stepNum) "+-*/"
