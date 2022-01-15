@@ -1,20 +1,30 @@
-# Countdown Number Game Solver
+# Countdown Game Solver
+
+This repo contains a solver for the numbers game, and the letters game.
 
 ## Build
 
-Just run `make`. You will need `ghc` installed (Haskell compiler).
+Just run `make`. You will need `ghc` installed (Haskell compiler). This will
+build both binaries.
 
 ## Usage
 
 ```
-$ ./countdown <list of numbers> <target>
+$ ./numbers <list of numbers> <target>
+$ ./letters <letters>
 ```
 
-If You provide 3 or less arguments, the program will just use randomly generated
-numbers and a random target. 3 arguments would just mean 2 numbers and 1 target
-which is a pretty pointless scenario.
+If You provide 3 or less arguments to `numbers`, the program will just use
+randomly generated numbers and a random target. 3 arguments would just mean 2
+numbers and 1 target which is a pretty pointless scenario.
+
+If you provide no arguments to `letters` then it will auto generate 9 letters
+for you.
 
 Example:
+
+`numbers` will give you a summary of the inputs, and then will attempt to show
+you solutions using 2,3,4,5 and 6 numbers.
 
 ```
 $ ./countdown 6 10 5 1 4 37 649
@@ -37,7 +47,28 @@ Results:
 629 + 20 = 649
 ```
 
-## How it Works
+`letters` will give show you the numbers you gave, the length of the longest
+word it found, and 9 additional words below it that also work.
+
+```
+$ ./letters sadliecen
+Provided Letters: sadliecen
+
+9 letter answer is longest
+
+alcedines
+cleansed
+declines
+delaines
+licensed
+salience
+secaline
+silenced
+adeline
+adience
+```
+
+## How it The Numbers Game Solver Works
 
 We start with our list of numbers, say `2,4,6,8`. I then find every possible
 pair of numbers in this list, which in this case are:
@@ -138,4 +169,4 @@ you find the first solution.
 ## References
 
 I used [this](https://cgjennings.ca/articles/countdown-numbers/) to help with
-creating the solver.
+creating the solver for the numbers game.
