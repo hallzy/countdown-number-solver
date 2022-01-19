@@ -4,8 +4,23 @@ This repo contains a solver for the numbers game, and the letters game.
 
 ## Build
 
-Just run `make`. You will need `ghc` installed (Haskell compiler). This will
-build both binaries.
+You will need the `System.Random` library which can be installed with:
+
+```
+$ cabal install random
+```
+
+You also need `wget` and `dos2unix`. This is only used to automatically download
+the word list. You can instead go [here](https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt)
+and download the wordlist yourself, but it has to have unix line endings.
+
+Then:
+
+```
+$ make
+```
+
+Will build the numbers and letters solvers
 
 ## Usage
 
@@ -170,3 +185,5 @@ you find the first solution.
 
 I used [this](https://cgjennings.ca/articles/countdown-numbers/) to help with
 creating the solver for the numbers game.
+
+Word list is from [here](https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt)
